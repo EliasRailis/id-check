@@ -1,3 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
+using IdCheck;
+using IdCheck.Enums;
 
-Console.WriteLine("Hello, World!");
+var validate = Identification.Validate("TEST");
+var validateWithDetailedOption = Identification.Validate("TEST2", Options.Detailed);
+
+Console.ReadLine();

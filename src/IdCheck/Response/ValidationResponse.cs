@@ -15,4 +15,5 @@ public class ValidationResponse
     public int? Age { get; set; } = null;
     public DateOnly? DateOfBirth { get; set; } = null;
     public string? Gender { get; set; } = null;
+    public string? Citizenship { get; set; } = null;
 }

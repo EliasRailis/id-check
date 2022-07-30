@@ -2,7 +2,7 @@
 using IdCheck;
 using IdCheck.Enums;
 
-var validate = Identification.Validate("8605065397083");
-// var validateWithDetailedOption = Identification.Validate("TEST2", Options.Detailed);
+var validate = Id.Validate("8605065397083");
+var validateWithDetailedOption = Id.Validate("8605065397083", Options.Detailed);
 
 Console.ReadLine();

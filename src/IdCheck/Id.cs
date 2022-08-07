@@ -23,6 +23,14 @@ public static class Id
     {
         bool isValid = false;
         
+        if (string.IsNullOrEmpty(idNumber))
+        {
+            return false;
+        }
+        
+        // Remove any whitespace from the string
+        idNumber = idNumber.Trim();
+        
         // Need to valid the string is numeric
         if (Regex.IsMatch(idNumber, @"^\d+$")) 
         {
@@ -45,34 +53,32 @@ public static class Id
     /// <exception cref="ArgumentException"></exception>
     private static bool IsValidSouthAfricanIdNumber(string idNumber)
     {
-        if (string.IsNullOrEmpty(idNumber))
-        {
-            throw new ArgumentException(@"Id number cannot be null or empty", nameof(idNumber));
-        }
-
-        // Remove any whitespace from the string
-        string idTrimString = idNumber.Trim();
+        bool valid = false;
         
         // Grab the control character
-        int controlCharacter = int.Parse(idTrimString.Substring(idTrimString.Length - 1));
+        int controlCharacter = int.Parse(idNumber.Substring(idNumber.Length - 1));
         
         // Remove last character (control character)
-        string id = idTrimString.Remove(idTrimString.Length - 1);
+        string id = idNumber.Remove(idNumber.Length - 1);
 
-        int oddPositionValuesResult = AddAllDigitsInOddPositions(id);
-        int evenPositionValuesResult = MultiplyEvenDigits(id);
+        int? oddPositionValuesResult = AddAllDigitsInOddPositions(id);
+        int? evenPositionValuesResult = MultiplyEvenDigits(id);
         
         // Adding the two results
-        int result = oddPositionValuesResult + evenPositionValuesResult;
-
-        // Grabbing the second character of the result
-        int secondChar = int.Parse(
-            result.ToString().Substring(result.ToString().Length - 1)
-        );
-
-        int total = 10 - secondChar;
+        if (oddPositionValuesResult is not null && evenPositionValuesResult is not null)
+        {
+            int result = (int) oddPositionValuesResult + (int) evenPositionValuesResult;
+            
+            // Getting the second character of the result
+            int secondChar = int.Parse(
+                result.ToString().Substring(result.ToString().Length - 1)
+            );
+            
+            int total = 10 - secondChar;
+            valid = (total == controlCharacter);
+        }
         
-        return (total == controlCharacter);
+        return valid;
     }
     
     /// <summary>
@@ -80,8 +86,8 @@ public static class Id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    /// <exception cref="IndexOutOfRangeException"></exception>
-    private static int AddAllDigitsInOddPositions(string id)
+    /// <exception cref="OverflowException"></exception>
+    private static int? AddAllDigitsInOddPositions(string id)
     {
         int total;
         List<int> valuesInOddPosition = new();
@@ -98,9 +104,9 @@ public static class Id
 
             total = (valuesInOddPosition.Count != 0) ? valuesInOddPosition.Sum() : 0;
         }
-        catch (IndexOutOfRangeException ex)
+        catch (OverflowException)
         {
-            throw new IndexOutOfRangeException(@"In AddAllDigitsInOddPositions method", ex);
+            return null;
         }
         
         return total;
@@ -111,8 +117,8 @@ public static class Id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    /// <exception cref="IndexOutOfRangeException"></exception>
-    private static int MultiplyEvenDigits(string id)
+    /// <exception cref="OverflowException"></exception>
+    private static int? MultiplyEvenDigits(string id)
     {
         int total = 0;
         string valuesInEvenPosition = string.Empty;
@@ -126,7 +132,7 @@ public static class Id
                     valuesInEvenPosition += id[i].ToString();
                 }
             }
-        
+
             int valuesInEvenPositionTotal = int.Parse(valuesInEvenPosition) * 2;
             string resultToString = valuesInEvenPositionTotal.ToString();
 
@@ -135,9 +141,9 @@ public static class Id
                 total += int.Parse(resultToString[i].ToString());
             }
         }
-        catch (IndexOutOfRangeException ex)
+        catch (OverflowException)
         {
-            throw new IndexOutOfRangeException(@"In MultiplyEvenDigits method", ex);
+            return null;
         }
 
         return total;

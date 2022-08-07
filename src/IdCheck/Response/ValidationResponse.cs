@@ -11,8 +11,8 @@
 /// </summary>
 public class ValidationResponse
 {
-    public bool IsValid { get; set; }
-    public string? DateOfBirth { get; set; }
-    public string? Gender { get; set; }
-    public string? Citizenship { get; set; }
+    public bool IsValid { get; init; }
+    public string? DateOfBirth { get; init; }
+    public string? Gender { get; init; }
+    public string? Citizenship { get; init; }
 }

@@ -9,16 +9,12 @@ namespace IdCheck;
 /// </summary>
 public static class Id
 {
-    // TODO: Testing
-    // TODO: Comments
-    // https://www.codeproject.com/Questions/268255/Validating-South-African-ID 
-    
     /// <summary>
-    /// Validation of the id number main method 
+    /// Validation of the ID number main method 
     /// </summary>
     /// <param name="idNumber">South African ID number</param>
     /// <param name="options">Will return a more detailed response or just (true or false)</param>
-    /// <returns></returns>
+    /// <returns>Returns true, false or detailed object</returns>
     public static dynamic Validate(string idNumber, Options options = Options.None)
     {
         bool isValid = false;
@@ -38,7 +34,7 @@ public static class Id
         
             if (options == Options.Detailed && isValid)
             {
-                return DetailedResponse(idNumber.Trim(), isValid);
+                return ManageResponse.DetailedResponse(idNumber.Trim(), isValid);
             }
         }
         
@@ -49,8 +45,7 @@ public static class Id
     /// Logic behind a South african id number
     /// </summary>
     /// <param name="idNumber"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
+    /// <returns>Returns true or false</returns>
     private static bool IsValidSouthAfricanIdNumber(string idNumber)
     {
         bool valid = false;
@@ -82,10 +77,11 @@ public static class Id
     }
     
     /// <summary>
-    /// 
+    /// This method will get the all the values in the odd position of the ID
+    /// Store the values into a List and return the sum
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Returns int or null</returns>
     /// <exception cref="OverflowException"></exception>
     private static int? AddAllDigitsInOddPositions(string id)
     {
@@ -113,10 +109,12 @@ public static class Id
     }
 
     /// <summary>
-    /// 
+    /// This method will get all the value in the even position of the ID number and convert it into a string
+    /// Then it will convert the string into a int that will be multiplied by 2
+    /// Convert that result into a string and by using the for loop it will add into a total 
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Return int or null</returns>
     /// <exception cref="OverflowException"></exception>
     private static int? MultiplyEvenDigits(string id)
     {
@@ -147,43 +145,5 @@ public static class Id
         }
 
         return total;
-    }
-
-    /// <summary>
-    /// This method is used to return a more detailed response object
-    /// </summary>
-    /// <param name="idNumber"></param>
-    /// <param name="isValidResult"></param>
-    /// <returns></returns>
-    private static ValidationResponse DetailedResponse(string idNumber, bool isValidResult)
-    {
-        string year = idNumber.Substring(0, 2);
-        string month = idNumber.Substring(2, 2);
-        string day = idNumber.Substring(4, 2);
-        string date = $"{year}/{month}/{day}";
-        
-        string? gender = null;
-        int genderValue = int.Parse(idNumber.Substring(6, 1));
-
-        if (genderValue >= 0 && genderValue <= 4)
-        {
-            gender = "Female";
-        }
-        else if (genderValue >= 5 && genderValue <= 9)
-        {
-            gender = "Male";
-        }
-
-        string citizenship = (idNumber.Substring(10, 1) == "0") ? "SA" : "Other";
-
-        var response = new ValidationResponse()
-        {
-            Gender = gender,
-            Citizenship = citizenship,
-            IsValid = isValidResult,
-            DateOfBirth = date
-        };
-        
-        return response;
     }
 }

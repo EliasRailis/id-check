@@ -1,4 +1,4 @@
-﻿namespace IdCheck.Response;
+﻿namespace IdCheck.Models;
 
 /// <summary>
 /// This class will return a more detailed response
@@ -12,7 +12,8 @@
 public class ValidationResponse
 {
     public bool IsValid { get; init; }
-    public string? DateOfBirth { get; init; }
+    public DateTime DateOfBirth { get; init; }
     public string? Gender { get; init; }
     public string? Citizenship { get; init; }
+    public int? Age { get; set; }
 }

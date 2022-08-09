@@ -13,6 +13,7 @@ public class Tests
     [InlineData("86050653470838605065347083", false)] // overflow exception
     [InlineData(" 8605065397083 ", true)] // has whitespaces
     [InlineData("860E65397083", false)] // isn't numeric string 
+    [InlineData("%&^%#&^@**333", false)] // isn't numeric string 
     [InlineData("8605--=65397083", false)] // has special characters
     [InlineData("86050653", false)] // has less then 13 characters
     public void ValidateId(string id, bool expected)

@@ -1,4 +1,6 @@
+using System;
 using IdCheck;
+using IdCheck.Response;
 using Xunit;
 
 namespace TestId;
@@ -20,5 +22,13 @@ public class Tests
     {
         var isValid = Id.Validate(id);
         Assert.Equal(expected, isValid);
+    }
+
+    [Fact]
+    public void TestDate()
+    {
+        var actual = ManageResponse.GetDateOfBirth("021003");
+        var expected = new DateOnly(2002, 10, 03);
+        Assert.Equal(expected, actual);
     }
 }

@@ -12,16 +12,16 @@ public static class ManageResponse
     /// <returns>Returns object</returns>
     public static ValidationResponse DetailedResponse(string idNumber, bool isValidResult)
     {
-        // TODO Get the date
-        // TODO Get the age
+        var date = GetDateOfBirth(idNumber);
+        var age = CalculateAge(date);
         
         var response = new ValidationResponse()
         {
             Gender = GetGender(idNumber),
             Citizenship = GetCitizenship(idNumber),
             IsValid = isValidResult,
-            DateOfBirth = GetDateOfBirth(idNumber), 
-            Age = 0
+            DateOfBirth = date, 
+            Age = age 
         };
         
         return response;
@@ -32,16 +32,26 @@ public static class ManageResponse
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Returns DateTime</returns>
-    public static DateTime GetDateOfBirth(string id)
+    public static DateOnly GetDateOfBirth(string id)
     {
-        /*
-        string year = idNumber.Substring(0, 2);
-        string month = idNumber.Substring(2, 2);
-        string day = idNumber.Substring(4, 2);
-        string date = $"{year}/{month}/{day}";
-        */
+        string year = id.Substring(0, 2);
+        string month = id.Substring(2, 2);
+        string day = id.Substring(4, 2);
         
-        return new DateTime();
+        var currentDate = DateOnly.FromDateTime(DateTime.Now);
+        string currentDateToString = currentDate.Year.ToString().Substring(2, 2);
+
+        // Checking if the year is in range of 0 to current year
+        if (Enumerable.Range(0, int.Parse(currentDateToString)).Contains(int.Parse(year)))
+        {
+            year = $"20{year}";
+        }
+        else
+        {
+            year = $"19{year}";
+        }
+        
+        return DateOnly.Parse($"{month}/{day}/{year}");
     }
 
     /// <summary>
@@ -49,9 +59,12 @@ public static class ManageResponse
     /// </summary>
     /// <param name="date"></param>
     /// <returns>Returns int or null</returns>
-    public static int? CalculateAge(DateTime date)
+    public static int? CalculateAge(DateOnly date)
     {
-        return 0;
+        var currentDate = DateOnly.FromDateTime(DateTime.Now);
+        int age = currentDate.Year - date.Year;
+
+        return age;
     }
     
     /// <summary>

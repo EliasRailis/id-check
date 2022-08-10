@@ -12,7 +12,7 @@
 public class ValidationResponse
 {
     public bool IsValid { get; init; }
-    public DateTime DateOfBirth { get; init; }
+    public DateOnly DateOfBirth { get; init; }
     public string? Gender { get; init; }
     public string? Citizenship { get; init; }
     public int? Age { get; set; }

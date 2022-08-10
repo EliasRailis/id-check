@@ -42,7 +42,7 @@ public static class Id
     }
 
     /// <summary>
-    /// Logic behind a South african id number
+    /// Logic behind a South African ID number
     /// </summary>
     /// <param name="idNumber"></param>
     /// <returns>Returns true or false</returns>

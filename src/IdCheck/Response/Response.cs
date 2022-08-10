@@ -31,7 +31,7 @@ public static class ManageResponse
     /// This method will get the date of birth from the ID 
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>Returns DateTime</returns>
+    /// <returns>Returns DateOnly</returns>
     public static DateOnly GetDateOfBirth(string id)
     {
         string year = id.Substring(0, 2);

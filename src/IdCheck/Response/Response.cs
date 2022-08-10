@@ -32,7 +32,7 @@ public static class ManageResponse
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Returns DateTime</returns>
-    private static DateTime GetDateOfBirth(string id)
+    public static DateTime GetDateOfBirth(string id)
     {
         /*
         string year = idNumber.Substring(0, 2);
@@ -49,7 +49,7 @@ public static class ManageResponse
     /// </summary>
     /// <param name="date"></param>
     /// <returns>Returns int or null</returns>
-    private static int? CalculateAge(DateTime date)
+    public static int? CalculateAge(DateTime date)
     {
         return 0;
     }
@@ -59,7 +59,7 @@ public static class ManageResponse
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Returns string</returns>
-    private static string? GetGender(string id)
+    public static string? GetGender(string id)
     {
         string? gender = null;
         int genderValue = int.Parse(id.Substring(6, 1));
@@ -81,7 +81,7 @@ public static class ManageResponse
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Will return a string</returns>
-    private static string GetCitizenship(string id)
+    public static string GetCitizenship(string id)
     {
         return (id.Substring(10, 1) == "0") ? "SA" : "Other";
     }

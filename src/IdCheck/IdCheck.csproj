@@ -4,6 +4,22 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>IdCheck</Title>
+        <Authors>Elias Railis</Authors>
+        <Description>A C# library that validates South African IDs</Description>
+        <PackageProjectUrl>https://github.com/EliasRailis/id-check</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/EliasRailis/id-check</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>idcheck-validation-southafricanid-dotnetcore-dotnet-csharp</PackageTags>
+        <PackageReleaseNotes>A C# library that validates South African IDs</PackageReleaseNotes>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Update="icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
 
 </Project>
